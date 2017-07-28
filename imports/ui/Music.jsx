@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
 
 export default class Music extends Component {
@@ -18,6 +19,7 @@ export default class Music extends Component {
         <a href="#" onClick={this.addMusicToSunday.bind(this)}>
           +
         </a>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="#"
           onClick={this.deleteMusic.bind(this)}>
           x

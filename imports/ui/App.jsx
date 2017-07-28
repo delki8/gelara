@@ -1,9 +1,9 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Musics } from '../api/musics.js';
+import { Musics } from '../api/musics';
 
 import Music from './Music.jsx';
 import SundayAdder from './SundayAdder.jsx';
@@ -13,12 +13,11 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      selectedSunday: {
-        date: '15/04/2015',
-        musics: [],
-      },
-    };
+    Meteor.call('sundays.findNextSunday', (err, res) => {
+      this.state = {
+          selectedSunday: res,
+      };
+    });
   }
 
   addMusic(event) {
@@ -84,6 +83,5 @@ export default createContainer(() => {
 
   return {
     musics: Musics.find({}, {sort: {name: 1}}).fetch(),
-    selectedSunday: Sunday.findNextSunday(),
   };
 }, App);
