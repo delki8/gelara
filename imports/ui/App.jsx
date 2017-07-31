@@ -19,19 +19,12 @@ class App extends Component {
           musics: [],
         },
         weeksIncrement: 0,
+        nameFilter: '',
     };
   }
 
   componentDidMount() {
-    Meteor.call('sundays.findOrCreateNextSunday', this.state.weeksIncrement,
-    (err, res) => {
-      this.setState({ selectedSunday: res })
-    }
-  );
-  }
-
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
+    this.findOrCreateNextSunday(this.state.weeksIncrement);
   }
 
   addMusic(event) {
@@ -54,25 +47,33 @@ class App extends Component {
   nextSunday(e) {
     const newIncrement = this.state.weeksIncrement + 1;
     this.setState({ weeksIncrement : newIncrement });
-    Meteor.call('sundays.findOrCreateNextSunday', newIncrement,
-    (err, res) => {
-      this.setState({ selectedSunday: res })
-    }
-  );
+    this.findOrCreateNextSunday(newIncrement);
   }
 
   previousSunday(e) {
     const newIncrement = this.state.weeksIncrement - 1;
     this.setState({ weeksIncrement : newIncrement });
-    Meteor.call('sundays.findOrCreateNextSunday', newIncrement,
-    (err, res) => {
-      this.setState({ selectedSunday: res })
-    }
-  );
+    this.findOrCreateNextSunday(newIncrement);
+  }
+
+  findOrCreateNextSunday(increment) {
+    Meteor.call('sundays.findOrCreateNextSunday', increment,
+      (err, res) => {
+        this.setState({ selectedSunday: res })
+      }
+    );
+  }
+
+  updateFilter(e) {
+    this.setState({ nameFilter : e.target.value });
   }
 
   renderMusics() {
-    return this.props.musics.map((music) => {
+    return this.props.musics
+    .filter((m) => {
+      return !this.state.nameFilter || m.name.toLowerCase().indexOf(this.state.nameFilter.toLowerCase()) != -1;
+    })
+    .map((music) => {
       return (
         <Music
           key={music._id}
@@ -103,6 +104,10 @@ class App extends Component {
           </button>
         </form>
 
+        <br />
+        <input
+          value={this.state.nameFilter}
+          onChange={this.updateFilter.bind(this)} />
         <ul>
           {this.renderMusics()}
         </ul>
@@ -116,6 +121,6 @@ export default createContainer(() => {
   Meteor.subscribe('allMusics');
 
   return {
-    musics: Musics.find({}, {sort: {name: 1}}).fetch(),
+    musics: Musics.find({}, {sort: {name: 1}}).fetch()
   };
 }, App);

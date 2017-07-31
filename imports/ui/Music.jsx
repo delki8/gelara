@@ -15,7 +15,6 @@ export default class Music extends Component {
     return (
       <div>
         <h4>{this.props.sunday.date.toString()}</h4>
-        <h4>{this.props.sunday.euvimdaqui}</h4>
         <li>{this.props.msc.name}</li>
         <a href="#" onClick={this.addMusicToSunday.bind(this)}>
           +
