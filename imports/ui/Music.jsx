@@ -8,17 +8,19 @@ export default class Music extends Component {
   }
 
   addMusicToSunday(event) {
-    event.preventDefault();
-    Meteor.call('sunday.addMusic', this.props.sunday._id, this.props.msc._id);
+    Meteor.call('sundays.addMusic', this.props.sunday._id, this.props.msc._id);
   }
 
   render() {
     return (
       <div>
+        <h4>{this.props.sunday.date.toString()}</h4>
+        <h4>{this.props.sunday.euvimdaqui}</h4>
         <li>{this.props.msc.name}</li>
         <a href="#" onClick={this.addMusicToSunday.bind(this)}>
           +
         </a>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="#"
           onClick={this.deleteMusic.bind(this)}>

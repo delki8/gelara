@@ -6,18 +6,25 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Musics } from '../api/musics';
 
 import Music from './Music.jsx';
-import SundayAdder from './SundayAdder.jsx';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
 
-    Meteor.call('sundays.findNextSunday', (err, res) => {
-      this.state = {
-          selectedSunday: res,
-      };
+    this.state = {
+        selectedSunday: { date: new Date() },
+    };
+  }
+
+  componentDidMount() {
+    Meteor.call('sundays.findOrCreateNextSunday', (err, res) => {
+      this.setState({ selectedSunday: res })
     });
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
   }
 
   addMusic(event) {
@@ -52,7 +59,6 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <SundayAdder sunday={this.state.selectedSunday}/>
 
         <button onClick={this.carregarDiretorioLocal.bind(this)}>
           carregar musicas do diretorio
@@ -73,10 +79,6 @@ class App extends Component {
   }
 
 }
-
-App.propTypes = {
-  musics: PropTypes.array.isRequired,
-};
 
 export default createContainer(() => {
   Meteor.subscribe('allMusics');
