@@ -3,9 +3,10 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import { Musics } from '../api/musics';
+import { Musics } from '/imports/api/musics';
 
-import Music from './Music.jsx';
+import Music from '/imports/ui/Music.jsx';
+import SundaySelector from '/imports/ui/SundaySelector.jsx';
 
 class App extends Component {
 
@@ -13,14 +14,20 @@ class App extends Component {
     super(props);
 
     this.state = {
-        selectedSunday: { date: new Date() },
+        selectedSunday: {
+          date: new Date(),
+          musics: [],
+        },
+        weeksIncrement: 0,
     };
   }
 
   componentDidMount() {
-    Meteor.call('sundays.findOrCreateNextSunday', (err, res) => {
+    Meteor.call('sundays.findOrCreateNextSunday', this.state.weeksIncrement,
+    (err, res) => {
       this.setState({ selectedSunday: res })
-    });
+    }
+  );
   }
 
   componentWillUnmount() {
@@ -40,8 +47,28 @@ class App extends Component {
 
   }
 
-  carregarDiretorioLocal() {
+  loadFromLocal() {
     Meteor.call('musics.readFromLocal');
+  }
+
+  nextSunday(e) {
+    const newIncrement = this.state.weeksIncrement + 1;
+    this.setState({ weeksIncrement : newIncrement });
+    Meteor.call('sundays.findOrCreateNextSunday', newIncrement,
+    (err, res) => {
+      this.setState({ selectedSunday: res })
+    }
+  );
+  }
+
+  previousSunday(e) {
+    const newIncrement = this.state.weeksIncrement - 1;
+    this.setState({ weeksIncrement : newIncrement });
+    Meteor.call('sundays.findOrCreateNextSunday', newIncrement,
+    (err, res) => {
+      this.setState({ selectedSunday: res })
+    }
+  );
   }
 
   renderMusics() {
@@ -59,9 +86,14 @@ class App extends Component {
   render() {
     return (
       <div className="container">
+        <SundaySelector
+          nextSunday={this.nextSunday.bind(this)}
+          previousSunday={this.previousSunday.bind(this)}
+          sunday={this.state.selectedSunday}
+          />
 
-        <button onClick={this.carregarDiretorioLocal.bind(this)}>
-          carregar musicas do diretorio
+        <button onClick={this.loadFromLocal.bind(this)}>
+          load musics from local dir
         </button>
         <br />
         <form onSubmit={this.addMusic.bind(this)}>
