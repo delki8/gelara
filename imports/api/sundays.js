@@ -8,12 +8,18 @@ Meteor.methods({
   'sundays.addMusic'(sundayId, musicId) {
     const sunday = Sundays.findOne(sundayId);
     const music = Musics.findOne(musicId);
+    const alreadyAddedMusics = sunday.musics.filter((m) => {
+      return m._id == musicId;
+    });
 
-    const addedMusics = sunday.musics;
-    addedMusics.push(music);
-    Sundays.update(
-      { _id : sundayId },
-      { $set : { musics : addedMusics } });
+    if (!alreadyAddedMusics.length) {
+      const addedMusics = sunday.musics;
+      addedMusics.push(music);
+      Sundays.update(
+        { _id : sundayId },
+        { $set : { musics : addedMusics }
+      });
+    }
   },
 
   'sundays.findOrCreateNextSunday'(weeksIncrement) {
