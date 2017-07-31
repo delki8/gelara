@@ -22,6 +22,18 @@ Meteor.methods({
     }
   },
 
+  'sundays.removeMusic'(sundayId, musicId) {
+    const sunday = Sundays.findOne(sundayId);
+    const music = Musics.findOne(musicId);
+    const musicsAfterRemoval = sunday.musics.filter((m) => {
+      return m._id != musicId;
+    });
+    Sundays.update(
+      { _id : sundayId },
+      { $set : { musics : musicsAfterRemoval }
+    });
+  },
+
   'sundays.findOrCreateNextSunday'(weeksIncrement) {
     // calculate the next sunday's date (returing today if today is sunday)
     const nextSundayDate = new Date();
