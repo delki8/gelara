@@ -13,6 +13,7 @@ Meteor.methods({
     });
 
     if (!alreadyAddedMusics.length) {
+      Meteor.call('musics.incrementCounter', music);
       const addedMusics = sunday.musics;
       addedMusics.push(music);
       Sundays.update(
@@ -25,9 +26,14 @@ Meteor.methods({
   'sundays.removeMusic'(sundayId, musicId) {
     const sunday = Sundays.findOne(sundayId);
     const music = Musics.findOne(musicId);
+    const numberOfMusicsBeforeRemoval = sunday.musics.length;
     const musicsAfterRemoval = sunday.musics.filter((m) => {
       return m._id != musicId;
     });
+    if (numberOfMusicsBeforeRemoval > musicsAfterRemoval.length) {
+      Meteor.call('musics.decrementCounter', music);
+    }
+
     Sundays.update(
       { _id : sundayId },
       { $set : { musics : musicsAfterRemoval }

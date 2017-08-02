@@ -45,4 +45,20 @@ Meteor.methods({
     Musics.remove(musicId);
   },
 
+  'musics.incrementCounter'(music) {
+    const timesPlayed = (music.timesPlayed == undefined ? 0 : music.timesPlayed) + 1;
+    Musics.update(
+      { _id : music._id },
+      { $set : { timesPlayed }
+    });
+  },
+
+  'musics.decrementCounter'(music) {
+    const timesPlayed = (music.timesPlayed == undefined ? 0 : music.timesPlayed) - 1;
+    Musics.update(
+      { _id : music._id },
+      { $set : { timesPlayed }
+    });
+  },
+
 });

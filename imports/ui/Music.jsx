@@ -18,6 +18,7 @@ export default class Music extends Component {
   render() {
     return (
       <div>
+        <h2>{this.props.msc.timesPlayed}</h2>
         <li>{this.props.msc.name}</li>
         {
           this.props.mode == 'sunday' ?
