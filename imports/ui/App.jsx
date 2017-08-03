@@ -24,6 +24,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.updateSunday();
+  }
+
+  updateSunday() {
     this.findOrCreateNextSunday(this.state.weeksIncrement);
   }
 
@@ -79,6 +83,7 @@ class App extends Component {
           key={music._id}
           msc={music}
           sunday={this.state.selectedSunday}
+          updateSunday={this.updateSunday.bind(this)}
           />
       );
     });
@@ -91,6 +96,7 @@ class App extends Component {
           nextSunday={this.nextSunday.bind(this)}
           previousSunday={this.previousSunday.bind(this)}
           sunday={this.state.selectedSunday}
+          updateSunday={this.updateSunday.bind(this)}
           />
 
         <button onClick={this.loadFromLocal.bind(this)}>

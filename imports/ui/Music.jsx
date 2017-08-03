@@ -9,10 +9,12 @@ export default class Music extends Component {
     } else {
       Meteor.call('musics.remove', this.props.msc._id);
     }
+    this.props.updateSunday();
   }
 
   addMusicToSunday(event) {
     Meteor.call('sundays.addMusic', this.props.sunday._id, this.props.msc._id);
+    this.props.updateSunday();
   }
 
   render() {
