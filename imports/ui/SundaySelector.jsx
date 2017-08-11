@@ -23,11 +23,11 @@ export default class SundaySelector extends Component {
     return (
       <div>
         <button onClick={this.props.previousSunday}>
-          back
+          &lt;&lt;
         </button>
-        {this.props.sunday.date.toString()}
+        <span className="selectedSunday">{this.props.sunday.date.toLocaleDateString()}</span>
         <button onClick={this.props.nextSunday}>
-          forward
+          &gt;&gt;
         </button>
 
         <ul>

@@ -19,25 +19,22 @@ export default class Music extends Component {
 
   render() {
     return (
-      <div>
-        <h2>{this.props.msc.timesPlayed}</h2>
-        <li>{this.props.msc.name}</li>
+      <li>
+        <h2>{this.props.msc.name}</h2>
         {
           this.props.mode == 'sunday' ?
           '' :
           <div>
-            <h4>{this.props.sunday.date.toString()}</h4>
-            <a href="#" onClick={this.addMusicToSunday.bind(this)}>
-              +
-            </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <h2>{this.props.msc.timesPlayed}</h2>
+            <button onClick={this.addMusicToSunday.bind(this)}>
+              add
+            </button>
           </div>
         }
-        <a href="#"
-          onClick={this.deleteMusic.bind(this)}>
-          x
-        </a>
-      </div>
+        <button onClick={this.deleteMusic.bind(this)}>
+          remove
+        </button>
+      </li>
     );
   }
 

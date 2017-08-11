@@ -1,1 +1,6 @@
 /* CSS declarations go here */
+span.selectedSunday {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px;
+}

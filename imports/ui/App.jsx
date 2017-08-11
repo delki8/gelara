@@ -99,10 +99,6 @@ class App extends Component {
           updateSunday={this.updateSunday.bind(this)}
           />
 
-        <button onClick={this.loadFromLocal.bind(this)}>
-          load musics from local dir
-        </button>
-        <br />
         <form onSubmit={this.addMusic.bind(this)}>
           <input type="text" id="musicName" ref="musicName" />
           <button>
