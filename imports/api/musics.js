@@ -54,6 +54,9 @@ Meteor.methods({
   },
 
   'musics.decrementCounter'(music) {
+    if (!music) {
+      return;
+    }
     const timesPlayed = (music.timesPlayed == undefined ? 0 : music.timesPlayed) - 1;
     Musics.update(
       { _id : music._id },
