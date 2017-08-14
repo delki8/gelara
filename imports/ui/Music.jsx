@@ -4,11 +4,7 @@ import React, { Component, PropTypes } from 'react';
 export default class Music extends Component {
 
   deleteMusic() {
-    if (this.props.mode == 'sunday') {
-      Meteor.call('sundays.removeMusic', this.props.sunday._id, this.props.msc._id);
-    } else {
-      Meteor.call('musics.remove', this.props.msc._id);
-    }
+    Meteor.call('musics.remove', this.props.msc._id);
     this.props.updateSunday();
   }
 
@@ -19,22 +15,18 @@ export default class Music extends Component {
 
   render() {
     return (
-      <li>
-        <h2>{this.props.msc.name}</h2>
-        {
-          this.props.mode == 'sunday' ?
-          '' :
-          <div>
-            <h2>{this.props.msc.timesPlayed}</h2>
-            <button onClick={this.addMusicToSunday.bind(this)}>
-              add
-            </button>
-          </div>
-        }
-        <button onClick={this.deleteMusic.bind(this)}>
+      <div className='musicItem'>
+        <h3>{this.props.msc.name}</h3>
+        <h2>{this.props.msc.timesPlayed}</h2>
+        <button className="musicButton"
+                onClick={this.addMusicToSunday.bind(this)}>
+          add
+        </button>
+        <button className="musicButton"
+                onClick={this.deleteMusic.bind(this)}>
           remove
         </button>
-      </li>
+      </div>
     );
   }
 

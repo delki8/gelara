@@ -92,28 +92,29 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <SundaySelector
-          nextSunday={this.nextSunday.bind(this)}
-          previousSunday={this.previousSunday.bind(this)}
-          sunday={this.state.selectedSunday}
-          updateSunday={this.updateSunday.bind(this)}
-          />
+        <div className="column">
+          <SundaySelector
+            nextSunday={this.nextSunday.bind(this)}
+            previousSunday={this.previousSunday.bind(this)}
+            sunday={this.state.selectedSunday}
+            updateSunday={this.updateSunday.bind(this)}
+            />
+        </div>
+        <div className="column">
+          <form onSubmit={this.addMusic.bind(this)}>
+            <input type="text" id="musicName" ref="musicName" />
+            <button>
+              add music
+            </button>
+          </form>
 
-        <form onSubmit={this.addMusic.bind(this)}>
-          <input type="text" id="musicName" ref="musicName" />
-          <button>
-            add music
-          </button>
-        </form>
-
-        <br />
-        <input
-          value={this.state.nameFilter}
-          onChange={this.updateFilter.bind(this)} />
-        <ul>
+          <br />
+          <input
+            value={this.state.nameFilter}
+            onChange={this.updateFilter.bind(this)} />
           {this.renderMusics()}
-        </ul>
-      </div>
+        </div>
+        </div>
     );
   }
 
