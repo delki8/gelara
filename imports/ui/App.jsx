@@ -92,7 +92,7 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <div className="column">
+        <div className="sundayColumn">
           <SundaySelector
             nextSunday={this.nextSunday.bind(this)}
             previousSunday={this.previousSunday.bind(this)}
@@ -100,7 +100,7 @@ class App extends Component {
             updateSunday={this.updateSunday.bind(this)}
             />
         </div>
-        <div className="column">
+        <div className="musicsColumn">
           <form onSubmit={this.addMusic.bind(this)}>
             <input type="text" id="musicName" ref="musicName" />
             <button>

@@ -25,7 +25,12 @@ span.selectedSunday {
   margin: 5px;
 }
 
-.column {
+.sundayColumn {
+  flex: 1;
+}
+
+.musicsColumn {
+  flex: 4;
 }
 
 @media screen and (max-width: 700px) {
