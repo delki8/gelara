@@ -25,12 +25,10 @@ export default class Music extends Component {
       <div className="card" style={cardStyle}>
         <div className="card-header">
           <div className="row">
-            <div className="col-xs-9 col-sm-9">
-              <strong>
-                {this.props.msc.name}
-              </strong>
+            <div className="col-10 font-weight-bold">
+              {this.props.msc.name}
             </div>
-            <div className="col-xs-3 col-sm-3">
+            <div className="col-2">
               <a href="#"
                 className="btn btn-danger btn-sm float-right"
                 onClick={this.deleteMusic.bind(this)}>
