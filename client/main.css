@@ -1,10 +1,16 @@
 /* CSS declarations go here */
-span.selectedSunday {
-  font-size: 24px;
-  font-weight: bold;
-  padding: 10px;
+body {
+  background-image: url('seamless-music-pattern.jpg');
 }
 
+.selectedSundayContainer {
+  font-size: 24px;
+  font-weight: bold;
+  background-color: whitesmoke;
+  border-radius: 5px;
+}
+
+/*
 .container {
   display: flex;
 }
@@ -41,3 +47,4 @@ span.selectedSunday {
     width: 90%;
   }
 }
+*/

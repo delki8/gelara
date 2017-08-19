@@ -19,19 +19,43 @@ export default class SundaySelector extends Component {
   }
 
   render() {
+    const tableStyle = {
+      marginTop: '1rem',
+    };
+
     return (
       <div>
-        <button onClick={this.props.previousSunday}>
-          &lt;&lt;
-        </button>
-        <span className="selectedSunday">{this.props.sunday.date.toLocaleDateString()}</span>
-        <button onClick={this.props.nextSunday}>
-          &gt;&gt;
-        </button>
+        <div className="row">
 
-        <ul>
-          {this.renderMusics()}
-        </ul>
+          <div className="col-2">
+            <button className="btn btn-info"
+              onClick={this.props.previousSunday}>
+              &lt;&lt;
+            </button>
+          </div>
+
+          <div className="col-8 text-center selectedSundayContainer">
+            <span className="font-weight-bold">
+              {this.props.sunday.date.toLocaleDateString()}
+            </span>
+          </div>
+
+          <div className="col-2">
+            <button className="btn btn-info float-right"
+              onClick={this.props.nextSunday}>
+              &gt;&gt;
+            </button>
+          </div>
+
+        </div>
+
+        <div className="row">
+          <table className="table table-inverse" style={tableStyle}>
+            <tbody>
+              {this.renderMusics()}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

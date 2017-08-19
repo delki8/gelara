@@ -14,14 +14,19 @@ export default class SundayMusic extends Component {
   }
 
   render() {
+
     return (
-      <li className='sundayMusicItem'>
-        <button onClick={this.deleteMusic.bind(this)}>
-          remove
-        </button>
-        -
-        {this.props.msc.name}
-      </li>
+      <tr>
+        <td>
+          {this.props.msc.name}
+        </td>
+        <td>
+          <button className="btn btn-outline-light btn-sm"
+                  onClick={this.deleteMusic.bind(this)}>
+            remove
+          </button>
+        </td>
+      </tr>
     );
   }
 
