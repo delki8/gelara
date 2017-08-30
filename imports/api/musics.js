@@ -2,6 +2,7 @@ import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import fs from 'fs';
+import faker from 'faker';
 
 export const Musics = new Mongo.Collection('musics');
 
@@ -64,4 +65,9 @@ Meteor.methods({
     });
   },
 
+});
+
+Factory.define('music', Musics, {
+  name: () => faker.lorem.sentence(),
+  createdAt: () => new Date(),
 });
