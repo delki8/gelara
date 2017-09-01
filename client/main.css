@@ -1,6 +1,6 @@
 /* CSS declarations go here */
 body {
-  background-image: url('seamless-music-pattern-3.jpg');
+  background-image: url('seamless-music-pattern.jpg');
 }
 
 .selectedSundayContainer {
@@ -10,41 +10,68 @@ body {
   border-radius: 5px;
 }
 
-/*
-.container {
+.counterColumnStyle {
+  display: flex;
+  color: #FFFFFF;
+}
+
+.counterStyle {
+  margin: auto;
+  font-size: 4.2rem;
+  font-weight: bold;
+}
+
+.nameStyle {
+  margin: auto;
+  font-size: 1.5rem;
+}
+
+.addStyle {
   display: flex;
 }
 
-.sundayMusicItem {
-  margin-top: 3px;
+.removeStyle {
+  display: flex;
 }
 
-.musicItem {
-  background-color: whitesmoke;
-  padding: 3px;
-  margin: 15px;
+.musicCardStyle {
+  margin-top: 2rem;
+  color: #FFFFFF;
+  background-color: #212121;
+  min-height: 100px;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
   border-radius: 15px;
-  max-width: 400px;
 }
 
-.musicButton {
-  margin: 5px;
+.addButton {
+  margin-left: auto;
+  margin-right: -1.7rem;
+  margin-top: auto;
+  margin-bottom: -1rem;
+  background-color: #00BCD4;
+  color: #212121;
+  height: 3.5rem;
+  width: 3.5rem;
+  display: flex;
 }
 
-.sundayColumn {
-  flex: 1;
+.oi {
+  margin: auto;
 }
 
-.musicsColumn {
-  flex: 4;
+.removeButton {
+  margin-left: -1.7rem;
+  margin-right: auto;
+  margin-top: -0.75rem;
+  margin-bottom: auto;
+  background-color: #CD5C5C;
+  color: #FFFFFF;
 }
-
-@media screen and (max-width: 700px) {
-  .container {
-    flex-direction: column;
-  }
-  .musicItem {
-    width: 90%;
-  }
-}
-*/
