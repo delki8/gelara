@@ -18,7 +18,9 @@ export default class SundayMusic extends Component {
     return (
       <tr>
         <td>
-          {this.props.msc.name}
+          <span className="musicName">
+            {this.props.msc.name}
+          </span>
         </td>
         <td>
           <button className="btn btn-outline-light btn-sm"
