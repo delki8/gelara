@@ -69,3 +69,8 @@ Meteor.methods({
   },
 
 });
+
+Factory.define('sunday', Sundays, {
+  date: () => new Date(),
+  musics: [],
+});
