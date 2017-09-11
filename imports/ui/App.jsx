@@ -132,8 +132,7 @@ class App extends Component {
 
 export default createContainer(() => {
   Meteor.subscribe('allMusics');
-
   return {
-    musics: Musics.find({}, {sort: {name: 1}}).fetch()
+    musics: Musics.find({}, {sort: {timesPlayed: 1}}).fetch()
   };
 }, App);
