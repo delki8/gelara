@@ -43,26 +43,17 @@ Meteor.methods({
   },
 
   'musics.remove'(musicId) {
-    Musics.remove(musicId);
-  },
-
-  'musics.incrementCounter'(music) {
-    const timesPlayed = (music.timesPlayed == undefined ? 0 : music.timesPlayed) + 1;
-    Musics.update(
-      { _id : music._id },
-      { $set : { timesPlayed }
-    });
-  },
-
-  'musics.decrementCounter'(music) {
-    if (!music) {
-      return;
-    }
-    const timesPlayed = (music.timesPlayed == undefined ? 0 : music.timesPlayed) - 1;
-    Musics.update(
-      { _id : music._id },
-      { $set : { timesPlayed }
-    });
+    Meteor.call('sundays.howManySundaysInTheLastXMonthsContainsThisMusic',
+      24, musicId,
+      (err, res) => {
+        if (!err) {
+          if (res < 1) {
+            Musics.remove(musicId);
+          } else {
+            console.log('This song is still associated with at least one sunday and cannot be removed.');
+          }
+        }
+      });
   },
 
 });

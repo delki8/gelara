@@ -3,6 +3,28 @@ import React, { Component, PropTypes } from 'react';
 
 export default class Music extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      timesPlayed : 0
+    };
+  }
+
+  componentDidMount() {
+    this.updateTimesPlayed();
+  }
+
+  updateTimesPlayed() {
+    Meteor.call('sundays.howManySundaysInTheLastXMonthsContainsThisMusic',
+      3, this.props.msc._id,
+      (err, res) => {
+        if (!err) {
+          this.setState({ timesPlayed : res });
+        }
+      });
+  }
+
   deleteMusic() {
     Meteor.call('musics.remove', this.props.msc._id);
     this.props.updateSunday();
@@ -11,13 +33,10 @@ export default class Music extends Component {
   addMusicToSunday(event) {
     Meteor.call('sundays.addMusic', this.props.sunday._id, this.props.msc._id);
     this.props.updateSunday();
+    this.updateTimesPlayed();
   }
 
   render() {
-    // const times = this.props.msc.timesPlayed > 1 ? ' times' : ' time';
-    // const timesPlayedMsg = this.props.msc.timesPlayed ?
-    // 'This song has been played ' + this.props.msc.timesPlayed + times :
-    // 'This song have never been played';
     return (
       <div className="row musicCardStyle">
         <div className="col-1 removeStyle">
@@ -31,7 +50,7 @@ export default class Music extends Component {
         </div>
         <div className="col-2 counterColumnStyle">
           <span className="counterStyle">
-            {this.props.msc.timesPlayed ? this.props.msc.timesPlayed : 0}
+            {this.state.timesPlayed ? this.state.timesPlayed : 0}
           </span>
         </div>
         <div className="col-6 nameStyle">
@@ -47,35 +66,6 @@ export default class Music extends Component {
           </a>
         </div>
       </div>
-      /*
-      <div className="card" style={cardStyle}>
-        <div className="card-header">
-          <div className="row">
-            <div className="col-10 font-weight-bold">
-              {this.props.msc.name}
-            </div>
-            <div className="col-2">
-              <a href="#"
-                className="btn btn-danger btn-sm float-right"
-                onClick={this.deleteMusic.bind(this)}>
-                  X
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="card-body">
-          <p className="card-text">{timesPlayedMsg}</p>
-        </div>
-
-        <div className="card-footer">
-          <a href="#"
-            className="btn btn-primary btn-sm"
-            onClick={this.addMusicToSunday.bind(this)}>
-              add
-          </a>
-        </div>
-      </div>
-      */
     );
   }
 

@@ -20,6 +20,7 @@ class App extends Component {
         },
         weeksIncrement: 0,
         nameFilter: '',
+        musicComponents: {},
     };
   }
 
@@ -27,8 +28,12 @@ class App extends Component {
     this.updateSunday();
   }
 
-  updateSunday() {
+  updateSunday(removedMusicId) {
     this.findOrCreateNextSunday(this.state.weeksIncrement);
+    if (removedMusicId) {
+      this.state.musicComponents[removedMusicId].updateTimesPlayed();
+    }
+
   }
 
   addMusic(event) {
@@ -78,14 +83,14 @@ class App extends Component {
       return !this.state.nameFilter || m.name.toLowerCase().indexOf(this.state.nameFilter.toLowerCase()) != -1;
     })
     .map((music) => {
-      return (
-        <Music
-          key={music._id}
-          msc={music}
-          sunday={this.state.selectedSunday}
-          updateSunday={this.updateSunday.bind(this)}
-          />
-      );
+      const m = <Music
+        ref= {(child) => { this.state.musicComponents[music._id] = child; }}
+        key={music._id}
+        msc={music}
+        sunday={this.state.selectedSunday}
+        updateSunday={this.updateSunday.bind(this)}
+        />;
+      return (m);
     });
   }
 
@@ -133,6 +138,6 @@ class App extends Component {
 export default createContainer(() => {
   Meteor.subscribe('allMusics');
   return {
-    musics: Musics.find({}, {sort: {timesPlayed: 1}}).fetch()
+    musics: Musics.find({}).fetch()
   };
 }, App);

@@ -5,6 +5,19 @@ export const Sundays = new Mongo.Collection('sundays');
 
 Meteor.methods({
 
+  'sundays.howManySundaysInTheLastXMonthsContainsThisMusic'(numberOfMonths, musicId) {
+    const startDate = new Date();
+    const music = Musics.findOne(musicId);
+    startDate.setMonth(startDate.getMonth() - numberOfMonths);
+
+    let sundays = Sundays.find({
+      date : { $gte : startDate },
+      musics : { $elemMatch: { _id : musicId } }
+    })
+    .count();
+    return sundays;
+  },
+
   'sundays.addMusic'(sundayId, musicId) {
     const sunday = Sundays.findOne(sundayId);
     const music = Musics.findOne(musicId);
@@ -13,7 +26,6 @@ Meteor.methods({
     });
 
     if (!alreadyAddedMusics.length) {
-      Meteor.call('musics.incrementCounter', music);
       const addedMusics = sunday.musics;
       addedMusics.push(music);
       Sundays.update(
@@ -30,9 +42,6 @@ Meteor.methods({
     const musicsAfterRemoval = sunday.musics.filter((m) => {
       return m._id != musicId;
     });
-    if (numberOfMusicsBeforeRemoval > musicsAfterRemoval.length) {
-      Meteor.call('musics.decrementCounter', music);
-    }
 
     Sundays.update(
       { _id : sundayId },
