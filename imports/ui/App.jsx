@@ -106,26 +106,22 @@ class App extends Component {
             />
         </div>
         <div className="musicsColumn">
-          <form onSubmit={this.addMusic.bind(this)}>
-            <div className="input-group">
-              <input className="form-control"
-                      type="text"
-                      id="musicName"
-                      ref="musicName"
-                      placeholder="music name" />
-              <button className="input-group-addon">
-                add new music
-              </button>
-            </div>
-          </form>
-
-          <div className="input-group">
-            <span className="input-group-addon">filter musics</span>
-            <input
-              className="form-control"
-              placeholder="music name"
-              value={this.state.nameFilter}
-              onChange={this.updateFilter.bind(this)} />
+          <div className="row">
+            <form className="col-12" onSubmit={this.addMusic.bind(this)}>
+              <div className="input-group">
+                <span className="input-group-addon text-dark">filter musics</span>
+                <input
+                  className="form-control"
+                  placeholder="music name"
+                  id="musicName"
+                  ref="musicName"
+                  value={this.state.nameFilter}
+                  onChange={this.updateFilter.bind(this)} />
+                <button className="btn btn-success">
+                  add new music
+                </button>
+              </div>
+            </form>
           </div>
           {this.renderMusics()}
         </div>
