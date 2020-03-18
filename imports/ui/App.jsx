@@ -83,14 +83,13 @@ class App extends Component {
       return !this.state.nameFilter || m.name.toLowerCase().indexOf(this.state.nameFilter.toLowerCase()) != -1;
     })
     .map((music) => {
-      const m = <Music
+      return (<Music
         ref= {(child) => { this.state.musicComponents[music._id] = child; }}
         key={music._id}
         msc={music}
         sunday={this.state.selectedSunday}
         updateSunday={this.updateSunday.bind(this)}
-        />;
-      return (m);
+        />);
     });
   }
 
